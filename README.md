@@ -1,2 +1,1 @@
-# submariner
-Subtitle converting server/proxy
+# Submariner
