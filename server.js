@@ -77,6 +77,6 @@ app.use(router.allowedMethods({
 	methodNotAllowed: () => Boom.methodNotAllowed(),
 }));
 
-app.listen(config.apiPortInternal);
+app.listen(config.apiPort);
 
-log.info('Server listening on port', config.apiPortInternal);
+log.info('Server listening on port', config.apiPort);

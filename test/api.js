@@ -8,7 +8,7 @@ const crlf    = require('crlf');
 const config  = require('../config');
 const server  = require('../server');
 
-const apiRoot = `http://localhost:${config.apiPortInternal}`;
+const apiRoot = `http://localhost:${config.apiPort}`;
 const API_HOST = process.env.API_HOST || `${apiRoot}${config.apiPath}`;
 const agent = request(API_HOST);
 
@@ -48,7 +48,7 @@ describe('Submariner - API', () => {
 				source: 'srt',
 				target: 'vtt',
 			})
-			.expect('Content-Type', 'text/plain; charset=utf-8')
+			.expect('Content-Type', 'text/vtt; charset=utf-8')
 			.expect(200)
 			.expect(res => {
 				expect(res.text).to.eql(expected);
@@ -64,7 +64,7 @@ describe('Submariner - API', () => {
 				url: `${apiRoot}/static/sample.srt`,
 				target: 'vtt',
 			})
-			.expect('Content-Type', 'text/plain; charset=utf-8')
+			.expect('Content-Type', 'text/vtt; charset=utf-8')
 			.expect(200)
 			.expect(res => {
 				expect(res.text).to.eql(expected);
@@ -156,7 +156,7 @@ describe('Submariner - API', () => {
 				source: 'srt',
 				target: 'vtt',
 			})
-			.expect('Content-Type', 'text/plain; charset=utf-8')
+			.expect('Content-Type', 'text/vtt; charset=utf-8')
 			.expect(200)
 			.expect(res => {
 				expect(res.text).to.eql(expected);
@@ -173,7 +173,7 @@ describe('Submariner - API', () => {
 				source: 'vtt',
 				target: 'srt',
 			})
-			.expect('Content-Type', 'text/plain; charset=utf-8')
+			.expect('Content-Type', 'text/srt; charset=utf-8')
 			.expect(200)
 			.expect(res => {
 				expect(res.text).to.eql(expected);
@@ -190,7 +190,7 @@ describe('Submariner - API', () => {
 				source: 'vtt',
 				target: 'srt',
 			})
-			.expect('Content-Type', 'text/plain; charset=utf-8')
+			.expect('Content-Type', 'text/srt; charset=utf-8')
 			.expect(200)
 			.expect(res => {
 				expect(res.text).to.eql(expected);
@@ -207,7 +207,7 @@ describe('Submariner - API', () => {
 				source: 'vtt',
 				target: 'srt',
 			})
-			.expect('Content-Type', 'text/plain; charset=utf-8')
+			.expect('Content-Type', 'text/srt; charset=utf-8')
 			.expect(200)
 			.expect(res => {
 				expect(res.text).to.eql(expected);
@@ -224,7 +224,24 @@ describe('Submariner - API', () => {
 				source: 'vtt',
 				target: 'srt',
 			})
-			.expect('Content-Type', 'text/plain; charset=utf-8')
+			.expect('Content-Type', 'text/srt; charset=utf-8')
+			.expect(200)
+			.expect(res => {
+				expect(res.text).to.eql(expected);
+			});
+	});
+
+	it('converts srt to vtt field test', async () => {
+		const expected = await expectedFile('./static/blade_runner.vtt');
+		return agent
+			.get('/convert')
+			.set('Accept', 'text/vtt')
+			.query({
+				url: `${apiRoot}/static/blade_runner.srt`,
+				source: 'srt',
+				target: 'vtt',
+			})
+			.expect('Content-Type', 'text/vtt; charset=utf-8')
 			.expect(200)
 			.expect(res => {
 				expect(res.text).to.eql(expected);

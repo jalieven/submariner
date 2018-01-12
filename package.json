@@ -8,6 +8,13 @@
     "test": "DISABLE_LOG=1 mocha test/index.js --exit --timeout 5000 $MOCHA_OPTIONS",
     "code-format": "./node_modules/.bin/prettier --use-tabs --tab-width 4 --single-quote --trailing-comma all --write '{lib,test}/**/*.js'"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jalieven/submariner"
+  },
+  "bugs": {
+    "url": "https://github.com/jalieven/submariner/issues"
+  },
   "keywords": [
     "subtitles",
     "convert",
