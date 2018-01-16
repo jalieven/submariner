@@ -15,7 +15,8 @@ router.get('/', async (ctx, next) => {
 });
 
 router.get('/convert', async (ctx, next) => {
-	const result = api.validateAndConvert(ctx.query);
+	const { url, source, target, ...rest } = ctx.query;
+	const result = api.validateAndConvert({ opts: { url, source, target }, query: rest, headers: ctx.headers });
 	if (!result.isBoom) {
 		ctx.type = result.type;
 		ctx.body = result.sub;
@@ -25,7 +26,7 @@ router.get('/convert', async (ctx, next) => {
 });
 
 router.post('/convert', async (ctx, next) => {
-	const result = api.validateAndConvert(ctx.request.body);
+	const result = api.validateAndConvert({ opts: ctx.request.body, query: ctx.query, headers: ctx.headers });
 	if (!result.isBoom) {
 		ctx.type = result.type;
 		ctx.body = result.sub;
